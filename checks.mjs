@@ -161,7 +161,8 @@ export function findProblems(dir, settings, { frontEnd = true } = {}) {
     const key = keySign(text)
     if (key) add(file, `possible ${key}`)
     if (frontEnd && looksLikeServerCode(text)) add(file, 'looks like server code')
-    const { counts } = scrub(text, settings)
+    // A write-up's live site link is public on purpose, even on a hosting domain.
+    const { counts } = scrub(file === 'README.md' ? text.replace(/^Live site: .*$/gm, '') : text, settings)
     for (const label of Object.keys(counts)) add(file, `still has: ${label}`)
   }
   return problems
