@@ -30,13 +30,15 @@ Private, never published: `~/github-daily/`
    - how to run it, and a link to the live site if there is one
 4. Add it to `queue.json` once the owner has approved that project or batch.
 
+To scrub everything at once, run `node batch.mjs <projects-folder>`. It writes `candidates.json` and keeps only the clean projects in `ready/`. A held project has imports that point at nothing, so fix those screens before it goes out.
+
 ## Write-up rules
 
 Keep it vague. Leave out fee percentages, wallet logic, treasury numbers, coin addresses, launch dates and partner names, and do not claim ties to any real person or company.
 
 ## Daily job
 
-`node publish.mjs` runs once a day. It re-checks the folder, runs gitleaks, makes real commits by area, and pushes to a new repo. It never touches a repo that already exists. Use `--dry-run` to see what it would do.
+`node publish.mjs` runs once a day. It re-checks a project, runs gitleaks, and splits it into small commits, one per page or component. Each day it releases a different number of those commits, moving on to the next project when one runs out. It never touches a repo that already exists. Use `--dry-run` to see what it would do.
 
 Set it up with `launchd` on the machine that holds `ready/`. Stop it with `touch ~/github-daily/PAUSE`.
 

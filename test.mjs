@@ -108,8 +108,9 @@ check('a planted secret after prepare is caught', () => {
 check('a dry run shows real commits and pushes nothing', () => {
   fs.writeFileSync(path.join(home, 'queue.json'), JSON.stringify([{ name: 'sample', description: 'test' }]))
   const out = node('publish.mjs', '--dry-run').stdout
-  assert.match(out, /Would publish nobody-here-test\/sample/)
-  assert.match(out, /Add pages and screens/)
+  assert.match(out, /Would publish nobody-here-test\/sample as \d+ commits/)
+  assert.match(out, /Add the home page/)
+  assert.match(out, /Add the Logo component/)
   assert.ok(!fs.existsSync(path.join(home, 'published.json')))
 })
 check('PAUSE stops the daily job', () => {
